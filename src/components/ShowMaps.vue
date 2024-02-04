@@ -1,9 +1,9 @@
 <template>
     <div>
-        <p>User</p>
+        <p style="color: white">User</p>
         <MapUser />
 
-        <p>Admin</p>
+        <p style="color: white">Admin</p>
         <MapAdmin />
     </div>
 </template>
