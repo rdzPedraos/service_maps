@@ -1,7 +1,5 @@
 <template>
-    <div>
-        <div id="user" style="height: 800px"></div>
-    </div>
+    <div id="user" style="height: 800px"></div>
 </template>
 
 <script>
@@ -29,7 +27,7 @@ export default {
         this.initializeMap();
 
         // Eventos del mapa
-        this.map.on("locationfound", this.handleLocationFound);
+        this.map.on("locationfound", this.moveMarker);
         this.map.on("click", this.moveMarker);
         this.map.on("geosearch/showlocation", this.moveMarker);
 
@@ -38,50 +36,66 @@ export default {
     },
     methods: {
         initializeMap() {
-            this.map = L.map("user");
+            const map = L.map("user");
+            const marker = this.createMarker();
 
-            L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-                maxZoom: 18,
-                attribution:
-                    'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-            }).addTo(this.map);
+            this.addControls(map, [
+                marker,
+                this.createTileLayer(),
+                this.createSearchControl(),
+                this.createLocateControl(),
+            ]);
 
-            // Agregar control de geocodificación
+            this.map = map;
+            this.marker = marker;
+        },
+
+        addControls(map, controls) {
+            controls.forEach((control) => {
+                map.addControl(control);
+            });
+        },
+
+        createTileLayer() {
+            return L.tileLayer(
+                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+                {
+                    maxZoom: 18,
+                    attribution:
+                        'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+                }
+            );
+        },
+
+        createMarker() {
+            return L.circleMarker([0, 0], {
+                color: "#fff",
+                fillColor: "#007bff",
+                fillOpacity: 1,
+                radius: 10, // Este es el radio en píxeles
+                weight: 3,
+                className: "pulse",
+            });
+        },
+
+        createSearchControl() {
             const provider = new OpenStreetMapProvider();
-            const searchControl = new GeoSearchControl({
+            return new GeoSearchControl({
                 provider: provider,
                 showMarker: false,
                 searchLabel: "Buscar dirección...",
                 notFoundMessage: "Sorry, that address could not be found.",
                 style: "bar",
             });
-            this.map.addControl(searchControl);
-
-            // Agregar control de ubicación
-            const locateControl = new LocateControl({
-                position: "topleft",
-                flyTo: true,
-                showPopup: false,
-                marker: false,
-                drawMarker: false,
-            }).addTo(this.map);
         },
 
-        handleLocationFound(e) {
-            if (this.marker) {
-                // Si el marcador ya existe, solo mueve su ubicación
-                this.marker.setLatLng(e.latlng);
-            } else {
-                // Si el marcador no existe, crea uno nuevo
-                this.marker = L.circleMarker(e.latlng, {
-                    color: "#fff",
-                    fillColor: "#007bff",
-                    fillOpacity: 1,
-                    radius: 10, // Este es el radio en píxeles
-                    weight: 3,
-                    className: "pulse",
-                }).addTo(this.map);
-            }
+        createLocateControl() {
+            return new LocateControl({
+                position: "topleft",
+                flyTo: true,
+                drawMarker: false,
+                enableHighAccuracy: true,
+            });
         },
 
         moveMarker(e) {
@@ -90,12 +104,6 @@ export default {
                 : [e.latlng.lat, e.latlng.lng];
 
             this.marker.setLatLng(coords);
-        },
-
-        adjustMarkerRadius() {
-            if (this.marker) {
-                this.marker.setRadius(this.getRadius());
-            }
         },
     },
 };
@@ -106,9 +114,11 @@ export default {
     0% {
         stroke-width: 1;
     }
+
     50% {
         stroke-width: 3;
     }
+
     100% {
         stroke-width: 1;
     }
