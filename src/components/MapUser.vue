@@ -1,5 +1,8 @@
 <template>
-    <div id="user" style="height: 800px"></div>
+    <div>
+        <span style="color: white">{{ coords }}</span>
+        <div id="user" style="height: 800px"></div>
+    </div>
 </template>
 
 <script>
@@ -20,6 +23,7 @@ export default {
         return {
             map: null,
             marker: null,
+            coords: [0, 0],
         };
     },
     mounted() {
@@ -68,7 +72,7 @@ export default {
         },
 
         createMarker() {
-            return L.circleMarker([0, 0], {
+            return L.circleMarker(this.coords, {
                 color: "#fff",
                 fillColor: "#007bff",
                 fillOpacity: 1,
@@ -104,6 +108,7 @@ export default {
                 : [e.latlng.lat, e.latlng.lng];
 
             this.marker.setLatLng(coords);
+            this.coords = { lat: coords[0], lng: coords[1] };
         },
     },
 };
