@@ -6,9 +6,14 @@
 </template>
 
 <script>
+import { env } from "./config";
+
 // Importaciones
 import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+
+//Tiles https://openmaptiles.org/docs/  - https://cloud.maptiler.com/account/keys/
+import { MaptilerLayer } from "@maptiler/leaflet-maptilersdk";
 
 //https://www.npmjs.com/package/leaflet-geosearch
 import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
@@ -61,14 +66,12 @@ export default {
         },
 
         createTileLayer() {
-            return L.tileLayer(
-                "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
-                {
-                    maxZoom: 18,
-                    attribution:
-                        'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
-                }
-            );
+            return new MaptilerLayer({
+                apiKey: env.MAPS_KEY,
+                maxZoom: 18,
+                attribution:
+                    'Map data © <a href="https://openstreetmap.org">OpenStreetMap</a> contributors',
+            });
         },
 
         createMarker() {

@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "@geoman-io/leaflet-geoman-free": "^2.15.0",
+    "@maptiler/leaflet-maptilersdk": "^2.0.0",
     "leaflet": "^1.9.4",
     "leaflet-control-geocoder": "^2.4.0",
     "leaflet-geosearch": "^3.11.0",
