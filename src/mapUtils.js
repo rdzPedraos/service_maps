@@ -10,6 +10,12 @@ import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 //https://www.npmjs.com/package/leaflet.locatecontrol
 import LocateControl from "leaflet.locatecontrol";
 
+// Style imports
+import "leaflet/dist/leaflet.css";
+import "leaflet-geosearch/dist/geosearch.css";
+import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
+import "./assets/animation.css";
+
 export function createMap(target) {
     return L.map(target);
 }

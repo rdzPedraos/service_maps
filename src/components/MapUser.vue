@@ -16,11 +16,6 @@ import {
     getCoordsFromEvent,
 } from "../mapUtils";
 
-// Importaciones
-import "leaflet/dist/leaflet.css";
-import "leaflet-geosearch/dist/geosearch.css";
-import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
-
 export default {
     data() {
         return {
@@ -65,23 +60,3 @@ export default {
     },
 };
 </script>
-
-<style>
-@keyframes pulse {
-    0% {
-        stroke-width: 1;
-    }
-
-    50% {
-        stroke-width: 3;
-    }
-
-    100% {
-        stroke-width: 1;
-    }
-}
-
-.pulse {
-    animation: pulse 2s ease infinite;
-}
-</style>
