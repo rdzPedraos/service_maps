@@ -1,4 +1,4 @@
-import { env } from "./config";
+import env from "./variables";
 import L from "leaflet";
 
 //Tiles https://openmaptiles.org/docs/  - https://cloud.maptiler.com/account/keys/
@@ -15,7 +15,7 @@ export function createMap(target) {
 }
 
 export function createTileLayer() {
-    switch (env.VITE_MAP_PROVIDER) {
+    switch (env.MAP_PROVIDER) {
         case "maptiler":
             return new MaptilerLayer({
                 apiKey: env.MAPS_KEY,
