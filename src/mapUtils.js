@@ -10,14 +10,18 @@ import { GeoSearchControl, OpenStreetMapProvider } from "leaflet-geosearch";
 //https://www.npmjs.com/package/leaflet.locatecontrol
 import LocateControl from "leaflet.locatecontrol";
 
+//https://www.npmjs.com/package/@geoman-io/leaflet-geoman-free
+import "@geoman-io/leaflet-geoman-free";
+
 // Style imports
 import "leaflet/dist/leaflet.css";
 import "leaflet-geosearch/dist/geosearch.css";
 import "leaflet.locatecontrol/dist/L.Control.Locate.min.css";
+import "@geoman-io/leaflet-geoman-free/dist/leaflet-geoman.css";
 import "./assets/animation.css";
 
-export function createMap(target) {
-    return L.map(target);
+export function createMap(target, options) {
+    return L.map(target, options);
 }
 
 export function createTileLayer() {
@@ -72,6 +76,29 @@ export function createLocateControl() {
         enableHighAccuracy: true,
     });
 }
+
+export const createEditionControls = () => {
+    const control = L.Control.extend({
+        onAdd: function (map) {
+            // Inicializa Leaflet-Geoman en el mapa cuando se agrega el control
+            map.pm.addControls({
+                position: "topleft",
+                drawMarker: true,
+                drawCircle: true,
+                drawRectangle: true,
+                drawPolyline: false,
+                cutPolygon: false,
+                editMode: true,
+                dragMode: true,
+                removalMode: true,
+            });
+
+            return L.DomUtil.create("div");
+        },
+    });
+
+    return new control();
+};
 
 export function addControls(map, controls) {
     controls.forEach((control) => {
