@@ -7,3 +7,16 @@ body {
     background: #181818;
     padding: 2rem;
 }
+
+.admin__container {
+    position: relative;
+}
+
+.admin__edit {
+    position: absolute;
+    bottom: 0;
+    z-index: 9999;
+    background: #77c6ff94;
+    padding: 2rem;
+    font-weight: bold;
+}

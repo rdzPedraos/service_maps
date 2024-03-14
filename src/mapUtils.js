@@ -83,9 +83,13 @@ export const createEditionControls = () => {
             // Inicializa Leaflet-Geoman en el mapa cuando se agrega el control
             map.pm.addControls({
                 position: "topleft",
-                drawMarker: true,
-                drawCircle: true,
+                //disable text
+                drawText: false,
+                drawMarker: false,
                 drawRectangle: true,
+                drawCircle: false,
+                drawCircleMarker: false,
+                drawPolygon: true,
                 drawPolyline: false,
                 cutPolygon: false,
                 editMode: true,
@@ -115,4 +119,8 @@ export function getCoordsFromEvent(event) {
         lat: coords[0],
         lng: coords[1],
     };
+}
+
+export function getLayerFromGeoJSON(geojson) {
+    return L.geoJSON(geojson);
 }

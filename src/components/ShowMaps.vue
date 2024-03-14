@@ -3,6 +3,10 @@
         <p style="color: white">User</p>
         <MapUser />
 
+        <br />
+        <br />
+        <br />
+
         <p style="color: white">Admin</p>
         <MapAdmin />
     </div>
